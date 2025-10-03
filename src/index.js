@@ -471,6 +471,24 @@ document.getElementById("shoot").addEventListener("touchend", () => {
   keys.shoot.released = true;
 });
 
+// Evita zoom quando clica nos botões mobile
+document.querySelectorAll(".mobile-controls button").forEach((btn) => {
+  btn.addEventListener("touchstart", (e) => {
+    e.preventDefault();
+  }, { passive: false });
+});
+
+// Botão fullscreen
+const fullscreenBtn = document.getElementById("fullscreen");
+
+fullscreenBtn.addEventListener("click", () => {
+  if (!document.fullscreenElement) {
+    document.documentElement.requestFullscreen();
+  } else {
+    document.exitFullscreen();
+  }
+});
+
 
 buttonRestart.addEventListener("click", restartGame);
 

@@ -173,7 +173,33 @@ canvas {
   padding: 16px 20px;
   font-size: 1.2rem;
   cursor: pointer;
+  touch-action: manipulation; /* evita zoom duplo */
 }
+
+/* Botão fullscreen */
+.fullscreen-btn {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  z-index: 20;
+  background: #333;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.fullscreen-btn:hover {
+  background: #555;
+}
+
+/* Impede zoom nos botões mobile */
+.mobile-controls button {
+  touch-action: manipulation; /* evita zoom com double tap */
+}
+
 
 @media (min-width: 769px) {
   .mobile-controls {
