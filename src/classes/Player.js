@@ -8,6 +8,17 @@ import {
 import Projectile from "./Projectile.js";
 
 class Player {
+
+    updateCanvasSize(width, height) {
+  this.canvasWidth = width;
+  this.canvasHeight = height;
+
+  // Reposiciona o player no centro embaixo
+  this.position.x = width / 2 - this.width / 2;
+  this.position.y = height - this.height - 20;
+}
+
+
     constructor(canvasWidth, canvasHeight) {
         this.alive = true;
         this.width = 48 * 2;

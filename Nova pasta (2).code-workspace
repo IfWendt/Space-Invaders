@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "../../Nova pasta (2)"
+		},
+		{
+			"name": "Space-Invaders",
+			"path": "../../Nova pasta (2)/Space-Invaders"
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "Nova pasta (2)"
+	}
+}

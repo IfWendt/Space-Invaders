@@ -22,8 +22,13 @@ gameOverScreen.remove();
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
 
-canvas.width = innerWidth;
-canvas.height = innerHeight;
+const resizeCanvas = () => {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+};
+
+resizeCanvas();
+window.addEventListener("resize", resizeCanvas);
 
 ctx.imageSmoothingEnabled = false;
 
@@ -55,19 +60,47 @@ const initObstacles = () => {
     const offset = canvas.width * 0.15;
     const color = "crimson";
 
-    const obstacle1 = new Obstacle({ x: x - offset, y }, 100, 20, color);
-    const obstacle2 = new Obstacle({ x: x + offset, y }, 100, 20, color);
+    let obstacleWidth = 100;
+    let obstacleHeight = 20;
+
+    if (window.innerWidth <= 768) { 
+        obstacleWidth = 70;
+        obstacleHeight = 15;
+    }
+
+    if (window.innerWidth <= 480) { 
+        obstacleWidth = 50;
+        obstacleHeight = 12;
+    }
+
+    const obstacle1 = new Obstacle({ x: x - offset, y }, obstacleWidth, obstacleHeight, color);
+    const obstacle2 = new Obstacle({ x: x + offset, y }, obstacleWidth, obstacleHeight, color);
 
     obstacles.push(obstacle1);
     obstacles.push(obstacle2);
 };
 
+
 initObstacles();
 
-const grid = new Grid(
-    Math.round(Math.random() * 9 + 1),
-    Math.round(Math.random() * 9 + 1)
-);
+// Ajusta quantidade inicial de invaders de acordo com a tela
+let initialRows = 4;
+let initialCols = 6;
+
+// Telas médias (tablets e celulares médios)
+if (window.innerWidth <= 768) {
+  initialRows = 2;
+  initialCols = 3;
+}
+
+// Telas bem pequenas (celulares menores)
+if (window.innerWidth <= 480) {
+  initialRows = 1;
+  initialCols = 2;
+}
+
+const grid = new Grid(initialRows, initialCols);
+
 
 const keys = {
     left: false,
@@ -290,8 +323,8 @@ const spawnGrid = () => {
     if (grid.invaders.length === 0) {
         soundEffects.playNextLevelSound();
 
-        grid.rows = Math.round(Math.random() * 9 + 1);
-        grid.cols = Math.round(Math.random() * 9 + 1);
+       grid.rows = Math.min(3 + Math.floor(gameData.level / 2), 10); 
+grid.cols = Math.min(5 + gameData.level, 12);
         grid.restart();
 
         incrementLevel();
@@ -423,6 +456,21 @@ buttonPlay.addEventListener("click", () => {
         }
     }, 500);
 });
+
+document.getElementById("left").addEventListener("touchstart", () => keys.left = true);
+document.getElementById("left").addEventListener("touchend", () => keys.left = false);
+
+document.getElementById("right").addEventListener("touchstart", () => keys.right = true);
+document.getElementById("right").addEventListener("touchend", () => keys.right = false);
+
+document.getElementById("shoot").addEventListener("touchstart", () => {
+  keys.shoot.pressed = true;
+});
+document.getElementById("shoot").addEventListener("touchend", () => {
+  keys.shoot.pressed = false;
+  keys.shoot.released = true;
+});
+
 
 buttonRestart.addEventListener("click", restartGame);
 
