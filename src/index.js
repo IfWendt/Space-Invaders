@@ -472,7 +472,7 @@ document.getElementById("shoot").addEventListener("touchend", () => {
 });
 
 // Evita zoom quando clica nos botões mobile
-document.querySelectorAll(".mobile-controls button").forEach((btn) => {
+document.querySelectorAll(".mobile-controls button", "fullscreen").forEach((btn) => {
   btn.addEventListener("touchstart", (e) => {
     e.preventDefault();
   }, { passive: false });
